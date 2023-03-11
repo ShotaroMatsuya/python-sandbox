@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  python:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    tty: true
+    volumes:
+      - ./basic:/code
+    ports:
+      - '8000:8000'

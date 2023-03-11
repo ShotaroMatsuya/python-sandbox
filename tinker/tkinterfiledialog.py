@@ -14,7 +14,7 @@ def filedialog_clicked():
     f = __file__
     open(f)
     iFile = os.path.abspath(os.path.dirname(__file__))
-    os.makedirs(iDirPath/iFile)
+    os.makedirs(iDirPath / iFile)
     iFilePath = filedialog.askopenfilename(initialdir=iFile)
     entry2.set(iFilePath)
 

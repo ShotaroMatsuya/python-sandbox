@@ -7,7 +7,6 @@ import cv2
 import numpy as np
 import picamera
 import picamera.array
-
 import tkinter_1
 
 
@@ -192,6 +191,8 @@ def init_pi_camera(dir_name):
     testinfo3 = (10, 160)
     test = False
     emoji = ["(=_=)~~", "(=o=)~~~", "(*O*)~~~~", "(-o-)~~~~~", "(-_-. o O"]
+
+    global camera
 
     with picamera.PiCamera() as camera:
         camera.vflip = False

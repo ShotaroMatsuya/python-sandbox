@@ -88,7 +88,7 @@ def init_tkinter(pi_camera):
     button3.pack(fill="x", padx=48, side=["left"])
 
     # キャンセルボタンの設置
-    button2 = ttk.Button(frame3, text=("閉じる"), command=quit)
+    button2 = ttk.Button(frame3, text=("閉じる"), command=lambda: root.destroy())
     button2.pack(fill="x", padx=35, side=["left"])
 
     root.mainloop()

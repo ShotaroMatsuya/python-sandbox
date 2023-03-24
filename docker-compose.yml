@@ -7,6 +7,6 @@ services:
       dockerfile: .devcontainer/Dockerfile
     tty: true
     volumes:
-      - ./tests:/code
+      - ./tkinter-basic:/code
     ports:
       - '8000:8000'

@@ -1,2 +1,8 @@
 black
 flake8
+
+pandas
+numpy
+matplotlib
+jupyterlab
+notebook

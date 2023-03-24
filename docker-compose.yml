@@ -10,3 +10,22 @@ services:
       - ./tests:/code
     ports:
       - '8000:8000'
+  notebook:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile.jupyter
+    container_name: notebook
+    tty: true
+    volumes:
+      - ./data-analytics:/root/opt
+      - ./data-analytics/config:/root/.config/matplotlib
+    ports:
+      - '8888:8888'
+    command:
+      - 'jupyter'
+      - 'notebook'
+      - '--port=8888'
+      - '--ip=0.0.0.0'
+      - '--allow-root'
+      - "--NotebookApp.token=''"
+      - '--NotebookApp.iopub_data_rate_limit=10000000000'

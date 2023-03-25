@@ -1,2 +1,14 @@
 black
 flake8
+
+pandas
+numpy
+matplotlib
+jupyterlab
+notebook
+
+ipython
+jupyter
+matplotlib
+pandas-datareader
+scikit-learn

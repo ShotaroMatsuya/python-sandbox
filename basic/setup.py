@@ -6,16 +6,18 @@ except ImportError:
 
 setup(
     name='python_programming_demo_app',
-    version='0.0.1',
-    packages=['roboter', 'roboter.models', 'roboter.controller', 'roboter.views'],
+    version='0.0.2',
+    packages=find_packages(),
     # You could use find_packages if setuptools is installed. 
-    # packages=find_packages(),
-    package_data={ 'roboter': ['templates/*.txt'] },
+    package_data={'roboter': ['templates/*.txt']},
     url='',
     license='MIT',
     author='jsakai',
     author_email='example@example.com',
     # You can specify install_requires if setuptools is installed
-    # install_requires=['termcolor==1.1.0'],
+    install_requires=['termcolor==1.1.0'],
     long_description=open('README.txt').read(),
+    tests_require=['pytest'],
+    setup_requires=["pytest-runner"]
+    # test_suits='tests'
 )

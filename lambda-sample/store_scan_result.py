@@ -73,11 +73,11 @@ def lambda_handler(event, context):
         file_exists = message.get("fileExists", False)
         rescan_attempted = get_scan_attempts(guid, date_scanned)
 
-        # スキャン結果をDynamoDBに保存
-        scan_action = "" # 空文字で初期化
+        # ReScanAttempted をインクリメント
         if scan_result == "Error":
-            scan_action = "rescan"
             rescan_attempted += 1
+
+        # スキャン結果をDynamoDBに保存
         store_scan_result(
             guid,
             date_scanned,
@@ -95,7 +95,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 200,
             "body": "Scan result stored successfully",
-            "scanAction": scan_action,
+            "scanAction": "rescan" if scan_result == "Error" else "",
             "ReScanAttempted": rescan_attempted,
         }
     except Exception as e:

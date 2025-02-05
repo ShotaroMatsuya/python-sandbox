@@ -1,0 +1,44 @@
+{
+  "Comment": "S3 Virus Scan Step Function",
+  "StartAt": "SendMetricsLambda",
+  "States": {
+    "SendMetricsLambda": {
+      "Type": "Task",
+      "Resource": "${module.send_antivirus_metrics_deploy.lambda_function_arn}",
+      "ResultPath": "$.result",
+      "Next": "CheckRescanNeeded"
+    },
+    "CheckRescanNeeded": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.result.scanAction",
+          "StringEquals": "rescan",
+          "Next": "CheckRescanLimit"
+        }
+      ],
+      "Default": "EndState"
+    },
+    "CheckRescanLimit": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.result.ReScanAttempted",
+          "NumericLessThan": 3,
+          "Next": "RescanFileLambda"
+        }
+      ],
+      "Default": "EndState"
+    },
+    "RescanFileLambda": {
+      "Type": "Task",
+      "Resource": "${module.rescan_object_function_deploy.lambda_function_arn}",
+      "ResultPath": "$.rescanResult",
+      "Next": "EndState"
+    },
+    "EndState": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}

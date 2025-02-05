@@ -1,0 +1,38 @@
+{
+  "Comment": "Step Functions workflow for checking S3 object scan results",
+  "StartAt": "GetS3ObjectTag",
+  "States": {
+    "GetS3ObjectTag": {
+      "Type": "Task",
+      "Resource": "${module.get_s3_tag_deploy.lambda_function_arn}",
+      "Retry": [
+        {
+          "ErrorEquals": ["States.TaskFailed"],
+          "IntervalSeconds": 2,
+          "MaxAttempts": 3,
+          "BackoffRate": 2.0
+        }
+      ],
+      "Next": "ProcessEachItem"
+    },
+    "ProcessEachItem": {
+      "Type": "Map",
+      "InputPath": "$",
+      "ItemsPath": "$.GetS3ObjectTagResult",
+      "ItemProcessor": {
+        "ProcessorConfig": {
+          "Mode": "INLINE"
+        },
+        "StartAt": "SendDatadogMetrics",
+        "States": {
+          "SendDatadogMetrics": {
+            "Type": "Task",
+            "Resource": "${module.send_problematic_files_metrics_deploy.lambda_function_arn}",
+            "End": true
+          }
+        }
+      },
+      "End": true
+    }
+  }
+}
